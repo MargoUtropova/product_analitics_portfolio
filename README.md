@@ -19,16 +19,21 @@
 
 ## 🛠 Инструменты
 
-- Python (pandas, numpy, matplotlib, seaborn, plotly)
-- SQL
-- Jupyter Notebook
-- Tableau / Power BI (в планах)
+| Категория | Технологии |
+|-----------|------------|
+| **Python** | Pandas, NumPy, Matplotlib, Seaborn, Plotly, Requests, BeautifulSoup, Selenium, Aiogram, Asuncio|
+| **SQL** | PostgreSQL, подзапросы, оконные функции, оптимизация |
+| **Базы данных** | PostgreSQL, SQLite, MySQL |
+| **Визуализация** | Power BI, Matplotlib, Seaborn, Excel |
+| **Боты и API** | Telegram API, Aiogram, Requests, Telethon, Pyrogram |
+| **Прочее** | Git, Jupyter Notebook, Google Colab |
 
 ---
 
 ## 📬 Контакты
 
 Если хочешь обсудить проекты или предложить идею — пиши в [`telegram`](https://t.me/MargoUtro)
+
 
 
 
