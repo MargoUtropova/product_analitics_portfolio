@@ -1,0 +1,1 @@
+SELECT * FROM rfm_segment_share ORDER BY customers_count DESC;

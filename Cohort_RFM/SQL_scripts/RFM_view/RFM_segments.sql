@@ -1,4 +1,4 @@
-create view rfm_segments as (
+create or replace view rfm_segments as (
 	with scores as (
 		select
 			card,

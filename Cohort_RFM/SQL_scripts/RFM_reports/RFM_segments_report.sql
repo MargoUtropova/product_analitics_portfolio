@@ -1,0 +1,1 @@
+SELECT * FROM rfm_segments ORDER BY rfm_segment;

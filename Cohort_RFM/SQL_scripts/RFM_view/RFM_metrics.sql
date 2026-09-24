@@ -1,4 +1,4 @@
-create view rfm_metrics as (
+create view or replace view rfm_metrics as (
 	with dates as (
 		select
 			datetime::date,

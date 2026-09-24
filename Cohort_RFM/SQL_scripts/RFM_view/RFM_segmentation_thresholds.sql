@@ -1,4 +1,4 @@
-create view rfm_segmentation_thresholds as (
+create or replace view rfm_segmentation_thresholds as (
 	select
 		'recency' as metric_name,
 		PERCENTILE_DISC(0.25) within group (
