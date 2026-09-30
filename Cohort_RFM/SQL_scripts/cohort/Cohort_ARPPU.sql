@@ -33,7 +33,7 @@ select
 	round(sum(case when date_diff between 31 and 60 then summ_with_disc end)/ count(distinct card), 2) as "31-60_day",
 	round(sum(case when date_diff between 31 and 60 then summ_with_disc end)/ count(distinct case when date_diff between 31 and 60 then card end), 2) as "31-60_ARPPU",
 	round(sum(case when date_diff between 61 and 90 then summ_with_disc end)/ count(distinct card), 2) as "61-90_day",
-	round(sum(case when date_diff between 61 and 90 then summ_with_disc end)/ count(distinct case when date_diff between 61 and 90 then card end), 2) as "61-90_60_ARPPU",
+	round(sum(case when date_diff between 61 and 90 then summ_with_disc end)/ count(distinct case when date_diff between 61 and 90 then card end), 2) as "61-90_ARPPU",
 	round(sum(case when date_diff between 91 and 120 then summ_with_disc end)/ count(distinct card), 2) as "91-120_day",
 	round(sum(case when date_diff between 91 and 120 then summ_with_disc end)/ count(distinct case when date_diff between 91 and 120 then card end), 2) as "91-120_ARPPU",
 	round(sum(case when date_diff between 121 and 150 then summ_with_disc end)/ count(distinct card), 2) as "121-150_day",
