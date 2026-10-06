@@ -1,6 +1,6 @@
 CREATE OR REPLACE VIEW rfm_segments_with_monetary AS
 SELECT
-    s.card,
+    s.customer_card,
     s.rfm_segment,
     m.monetary
 FROM rfm_segments s

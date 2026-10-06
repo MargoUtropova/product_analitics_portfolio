@@ -1,8 +1,5 @@
-create or replace view RFM_segment_share as (select
-	rfm_segment,
-	count(card) as customers_count,
-	to_char(round(count(card) * 100.0 / (select count(*) from rfm_metrics), 2), 'fm00D00%') as share
-from
-	rfm_segments
-group by
-	rfm_segment)
+create or replace view RFM_segment_share as (select rfm_segment, count(rfm_segment) as total,
+to_char(round(count(rfm_segment)*100/ (select count(*) from rfm_customer_metrics),2),'fm00D00%') as share
+from view_rfm_segments vrs
+group by rfm_segment
+order by rfm_segment)

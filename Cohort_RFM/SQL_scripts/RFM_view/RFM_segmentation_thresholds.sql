@@ -1,52 +1,19 @@
-create or replace view rfm_segmentation_thresholds as (
-	select
-		'recency' as metric_name,
-		PERCENTILE_DISC(0.33) within group (
-		order by
-			recency
-		) as perc_33,
-		PERCENTILE_DISC(0.5) within group (
-		order by
-			recency
-		) as median,
-		PERCENTILE_DISC(0.66) within group (
-		order by
-			recency
-		) as perc_66
-	from
-		rfm_metrics
+create view rfm_segmentation_thresholds as (
+select 'Recency' as metric_name,
+PERCENTILE_DISC(0.33) within group (order by recency_days) as percentile_33,
+percentile_disc(0.5) within group (order by recency_days) as median,
+percentile_disc(0.66) within group (order by recency_days) as percentile_66
+from rfm_customer_metrics rcm
 union all
-	select
-		'frequency' as metric_name,
-		PERCENTILE_DISC(0.33) within group (
-		order by
-			frequency
-		) as perc_33,
-		PERCENTILE_DISC(0.5) within group (
-		order by
-			frequency
-		) as median,
-		PERCENTILE_DISC(0.66) within group (
-		order by
-			frequency
-		) as perc_66
-	from
-		rfm_metrics
+select 'Frequency' as metric_name,
+PERCENTILE_DISC(0.33) within group (order by frequency_count) as percentile_33,
+percentile_disc(0.5) within group (order by frequency_count) as median,
+percentile_disc(0.66) within group (order by frequency_count) as percentile_66
+from rfm_customer_metrics rcm
 union all
-	select
-		'monetary' as metric_name,
-		PERCENTILE_DISC(0.33) within group (
-		order by
-			monetary
-		) as perc_33,
-		PERCENTILE_DISC(0.5) within group (
-		order by
-			monetary
-		) as median,
-		PERCENTILE_DISC(0.66) within group (
-		order by
-			monetary
-		) as perc_66
-	from
-		rfm_metrics
+select 'Monetary' as metric_name,
+PERCENTILE_DISC(0.33) within group (order by monetary_total) as percentile_33,
+percentile_disc(0.5) within group (order by monetary_total) as median,
+percentile_disc(0.66) within group (order by monetary_total) as percentile_66
+from rfm_customer_metrics rcm
 )
