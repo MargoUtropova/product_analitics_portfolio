@@ -1,4 +1,4 @@
-CREATE VIEW view_rfm_segments AS (
+CREATE or REPLACE VIEW rfm_segments AS (
 WITH customer_segmentation AS (
 select customer_card,
 case

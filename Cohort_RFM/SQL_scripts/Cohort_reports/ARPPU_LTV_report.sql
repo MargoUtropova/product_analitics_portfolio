@@ -1,0 +1,1 @@
+select * from mart.cohort_ARPPU_ARPU_LTV

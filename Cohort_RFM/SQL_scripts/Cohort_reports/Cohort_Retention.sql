@@ -1,0 +1,1 @@
+select * from mart.retention_cohorts

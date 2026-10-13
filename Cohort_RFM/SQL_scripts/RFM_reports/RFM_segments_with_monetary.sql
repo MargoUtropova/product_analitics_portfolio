@@ -1,1 +1,0 @@
-SELECT * FROM rfm_segments_with_monetary
