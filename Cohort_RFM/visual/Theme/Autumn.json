@@ -1,0 +1,76 @@
+{
+  "name": "My Power BI Theme",
+  "dataColors": [
+    "#d2691e",
+    "#ff8c00",
+    "#daa520",
+    "#8b4513",
+    "#cd853f",
+    "#a0522d"
+  ],
+  "background": "#fff8ee",
+  "foreground": "#3d1f00",
+  "tableAccent": "#d2691e",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "color": "#fff3e0"
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#ffcc80"
+              }
+            }
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontColor": {
+              "solid": {
+                "color": "#a0522d"
+              }
+            },
+            "background": {
+              "solid": {
+                "color": "#fff3e0"
+              }
+            },
+            "fontSize": 14,
+            "fontFamily": "Verdana",
+            "bold": false,
+            "fontBold": false
+          }
+        ]
+      }
+    }
+  },
+  "textClasses": {
+    "title": {
+      "color": "#a0522d",
+      "fontFace": "Verdana",
+      "fontSize": 14
+    },
+    "label": {
+      "color": "#3d1f00",
+      "fontFace": "Verdana",
+      "fontSize": 11
+    },
+    "callout": {
+      "color": "#d2691e",
+      "fontFace": "Verdana",
+      "fontSize": 28
+    },
+    "header": {
+      "color": "#a0522d",
+      "fontFace": "Verdana",
+      "fontSize": 12
+    }
+  }
+}

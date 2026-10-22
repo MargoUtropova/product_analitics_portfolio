@@ -1,35 +1,23 @@
-
+-- 05_cohort_retention.sql: retention по когортам (факт для зрелых окон, прогноз для незрелых)
 CREATE SCHEMA IF NOT EXISTS mart;
 
-DROP TABLE IF EXISTS mart.retention_cohorts;
+DROP TABLE IF EXISTS mart.retention_cohorts CASCADE;
 
 CREATE TABLE mart.retention_cohorts AS
 
-WITH first_purchase AS (
-    SELECT
-        card,
-        MIN(datetime::date) AS first_purchase,
-        DATE_TRUNC('month', MIN(datetime))::date AS cohort
-    FROM checks
-    WHERE card LIKE '2000%'
-    GROUP BY card
-),
+WITH first_purchase as (
+          select card, first_purchase, cohort_month as cohort
+          from etl.clients
+      ),
 
-data_cutoff AS (
-    SELECT MAX(datetime::date) AS max_date
-    FROM checks
-    WHERE card LIKE '2000%'
-),
-
-cohort_calendar AS (
-    -- Гарантируем наличие всех 10 когорт
-    SELECT
-        generate_series(
-            DATE '2021-08-01',
-            DATE '2022-05-01',
-            INTERVAL '1 month'
-        )::date AS cohort
-),
+data_cutoff as (
+          select data_end + 1 as max_date          -- день отсечки + 1: то же правило зрелости, что is_complete в mart.cohort_metrics
+          from etl.params
+      ),
+cohort_calendar as (
+          select generate_series(p.cohort_start, p.data_end_month, interval '1 month')::date as cohort
+          from etl.params p
+      ),
 
 cohort_sizes AS (
     SELECT
@@ -53,23 +41,15 @@ periods AS (
     ) AS p(period, day_from, day_to)
 ),
 
-user_activity AS (
-    -- Уникальные клиенты с покупками в каждом интервале
-    SELECT
-        fp.cohort,
-        p.period,
-        COUNT(DISTINCT fp.card) AS users
-    FROM first_purchase fp
-    JOIN checks c
-        ON c.card = fp.card
-    JOIN periods p
-        ON c.datetime::date - fp.first_purchase
-           BETWEEN p.day_from AND p.day_to
-    WHERE fp.cohort BETWEEN DATE '2021-08-01'
-                        AND DATE '2022-05-01'
-    GROUP BY fp.cohort, p.period
-),
-
+-- user_activity: активность по заказам etl.orders
+      user_activity as (
+          select fp.cohort, p.period, count(distinct fp.card) as users
+          from first_purchase fp
+          join etl.orders c on c.card = fp.card
+          join periods p on c.order_date - fp.first_purchase between p.day_from and p.day_to
+          where fp.cohort between (select cohort_start from etl.params) and (select data_end_month from etl.params)
+          group by fp.cohort, p.period
+      ),
 cohort_periods AS (
     -- Каждая когорта × каждый период, включая периоды без покупок
     SELECT

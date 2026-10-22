@@ -1,3 +1,6 @@
+-- 04_client_ltv.sql: накопленная выручка клиента на днях 0, 30, ..., 180 (NULL, если точка ещё не наступила)
+drop table if exists mart.client_ltv cascade;
+
 create table mart.client_ltv as
 select
 	d.card,
@@ -31,6 +34,7 @@ left join etl.orders o on
 	o.card = d.card
 where
 	d.anchor_date >= p.cohort_start
+	and d.cohort_month <= p.data_end_month
 group by
 	d.card,
 	d.cohort_month,

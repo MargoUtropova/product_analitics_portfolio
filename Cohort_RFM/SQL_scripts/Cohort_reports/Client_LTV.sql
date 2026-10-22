@@ -1,1 +1,0 @@
-select * from mart.client_ltv
