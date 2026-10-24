@@ -20,9 +20,9 @@ with customer_transactions as (
 rfm_aggregated as (
 	select
 		customer_card,
-		MIN(analysis_reference_date - last_purchase_date) as recency_days,
-		MIN(transaction_count) as frequency_count,
-		SUM(transaction_amount) as monetary_total
+		MIN(analysis_reference_date - last_purchase_date) as recency,
+		MIN(transaction_count) as frequency,
+		SUM(transaction_amount) as monetary
 	from
 		customer_transactions
 	group by
@@ -33,15 +33,15 @@ percentiles as (
 		'Recency' as metric_name,
 		PERCENTILE_DISC(0.33) within group (
 		order by
-			recency_days
+			recency
 		) as percentile_33,
 		PERCENTILE_DISC(0.5) within group (
 		order by
-			recency_days
+			recency
 		) as median,
 		PERCENTILE_DISC(0.66) within group (
 		order by
-			recency_days
+			recency
 		) as percentile_66
 	from
 		rfm_aggregated
@@ -50,15 +50,15 @@ union all
 		'Frequency',
 		PERCENTILE_DISC(0.33) within group (
 		order by
-			frequency_count
+			frequency
 		),
 		PERCENTILE_DISC(0.5) within group (
 		order by
-			frequency_count
+			frequency
 		),
 		PERCENTILE_DISC(0.66) within group (
 		order by
-			frequency_count
+			frequency
 		)
 	from
 		rfm_aggregated
@@ -67,15 +67,15 @@ union all
 		'Monetary',
 		PERCENTILE_DISC(0.33) within group (
 		order by
-			monetary_total
+			monetary
 		),
 		PERCENTILE_DISC(0.5) within group (
 		order by
-			monetary_total
+			monetary
 		),
 		PERCENTILE_DISC(0.66) within group (
 		order by
-			monetary_total
+			monetary
 		)
 	from
 		rfm_aggregated
@@ -84,18 +84,18 @@ rfm_segments_total as (
 	select
 		ra.customer_card,
 		concat(case
-            when recency_days <= (select percentile_33 from percentiles where metric_name = 'Recency') then 1
-            when recency_days <= (select percentile_66 from percentiles where metric_name = 'Recency') then 2
+            when recency <= (select percentile_33 from percentiles where metric_name = 'Recency') then 1
+            when recency <= (select percentile_66 from percentiles where metric_name = 'Recency') then 2
             else 3
         end,
         case
-            when frequency_count <= (select percentile_33 from percentiles where metric_name = 'Frequency') then 3
-            when frequency_count <= (select percentile_66 from percentiles where metric_name = 'Frequency') then 2
+            when frequency <= (select percentile_33 from percentiles where metric_name = 'Frequency') then 3
+            when frequency <= (select percentile_66 from percentiles where metric_name = 'Frequency') then 2
             else 1
         end,
         case
-            when monetary_total <= (select percentile_33 from percentiles where metric_name = 'Monetary') then 3
-            when monetary_total <= (select percentile_66 from percentiles where metric_name = 'Monetary') then 2
+            when monetary <= (select percentile_33 from percentiles where metric_name = 'Monetary') then 3
+            when monetary <= (select percentile_66 from percentiles where metric_name = 'Monetary') then 2
             else 1
         end) as rfm_segment
 	from
@@ -106,7 +106,7 @@ rfm_segments_total as (
 select
 	rfm_segment as "RFM-Сегмент",
 	COUNT(customer_card) as "Кол-во клиентов",
-	TO_CHAR(ROUND(COUNT(customer_card) * 100.0 / SUM(COUNT(customer_card)) over (), 2), 'fm00D00%') as "Доля"
+	ROUND(COUNT(customer_card) * 100.0 / SUM(COUNT(customer_card)) over (), 2) as "Доля"
 from
 	rfm_segments_total
 group by

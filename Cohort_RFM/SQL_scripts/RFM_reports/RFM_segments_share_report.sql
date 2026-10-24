@@ -1,1 +1,1 @@
-SELECT * FROM rfm_segment_share ORDER BY 2 DESC;
+SELECT * FROM mart.rfm_segment_share ORDER BY 2 DESC;

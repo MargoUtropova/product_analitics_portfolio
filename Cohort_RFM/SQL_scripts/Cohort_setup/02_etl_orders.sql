@@ -11,6 +11,7 @@ from
 	etl.params p
 where
 	card like '2000%'
+	and summ_with_disc > 0
 	and datetime::date between '2000-01-01' and p.data_end
 group by
 	doc_id,
