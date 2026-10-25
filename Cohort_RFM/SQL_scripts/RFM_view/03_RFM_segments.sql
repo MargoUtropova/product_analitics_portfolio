@@ -54,7 +54,7 @@ view mart.rfm_segments as (
 					select
 						percentile_66
 					from
-						rfm_segmentation_thresholds
+						mart.rfm_segmentation_thresholds
 					where
 						metric_name = 'Monetary'
 				) then 2

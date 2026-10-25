@@ -1,4 +1,5 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+
 from environs import Env
 
 
@@ -11,16 +12,17 @@ class LogSettings:
 
 @dataclass
 class DataBase:
-    """ настройки доступа """
-    host: str        # или IP сервера
-    port: str
-    dbname: str       # база, которую создали в pgAdmin
+    """Настройки доступа к базе данных."""
+    host: str                           # или IP сервера
+    port: int
+    dbname: str                         # база, которую создали в pgAdmin
     user: str
-    password: str
+    password: str = field(repr=False)   # не попадает в repr и в логи
+
 
 @dataclass
 class Config:
-    database:DataBase
+    database: DataBase
     log: LogSettings
 
 
@@ -32,13 +34,13 @@ def load_config(path: str | None = None) -> Config:
               Если путь не указан, environs ищет .env автоматически.
 
     Returns:
-        Объект Config с настройками бота и логирования.
+        Объект Config с настройками базы данных и логирования.
     """
 
     env = Env()
 
     # Если путь не указан, environs ищет файл .env
-    # в текущей директории и родительских директориях.
+    # в директории этого файла и родительских директориях.
     if path is None:
         env.read_env()
     else:
@@ -46,14 +48,14 @@ def load_config(path: str | None = None) -> Config:
 
     return Config(
         database=DataBase(
-            host=env("HOST"),      # или IP сервера
-            port=env("PORT"),
-            dbname=env("DBNAME") ,     # база, которую создали в pgAdmin
-            user=env("USER"),
-            password=env("PASSWORD"),
+            host=env.str("DB_HOST"),            # или IP сервера
+            port=env.int("DB_PORT", 5432),
+            dbname=env.str("DB_NAME"),          # база, которую создали в pgAdmin
+            user=env.str("DB_USER"),
+            password=env.str("DB_PASSWORD"),
         ),
         log=LogSettings(
-            level=env("LOG_LEVEL"),
-            format=env("LOG_FORMAT"),
+            level=env.str("LOG_LEVEL"),
+            format=env.str("LOG_FORMAT"),
         ),
     )

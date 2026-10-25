@@ -1,0 +1,59 @@
+[2026-10-25 18:14:56,079] #INFO     main.py:108 - cohort_rfm - База: cohort_rfm_als (localhost:5433); этапы: setup, rfm, checks, reports
+[2026-10-25 18:14:56,080] #ERROR    main.py:112 - cohort_rfm - Этапы ['rfm', 'setup'] пересоздают таблицы и представления (drop ... cascade), а база 'cohort_rfm_als' не оканчивается на _test. Для запуска на этой базе добавьте --allow-prod.
+[2026-10-25 18:17:09,255] #INFO     main.py:108 - cohort_rfm - База: cohort_rfm_als (localhost:5433); этапы: setup, rfm, checks, reports
+[2026-10-25 18:17:09,675] #INFO     main.py:126 - cohort_rfm - === Этап: setup ===
+[2026-10-25 18:17:09,676] #INFO     funcs.py:155 - funcs.funcs - Папка Cohort_setup: файлов 6, режим execute
+[2026-10-25 18:17:09,790] #INFO     funcs.py:167 - funcs.funcs - Готово: 01_params.sql (0.1 с)
+[2026-10-25 18:17:09,804] #INFO     funcs.py:167 - funcs.funcs - Готово: 02_etl_orders.sql (0.0 с)
+[2026-10-25 18:17:09,972] #INFO     funcs.py:167 - funcs.funcs - Готово: 03_etl_clients.sql (0.2 с)
+[2026-10-25 18:17:10,164] #INFO     funcs.py:167 - funcs.funcs - Готово: 04_client_ltv.sql (0.2 с)
+[2026-10-25 18:17:10,479] #INFO     funcs.py:167 - funcs.funcs - Готово: 05_cohort_retention.sql (0.3 с)
+[2026-10-25 18:17:10,493] #INFO     funcs.py:167 - funcs.funcs - Готово: 06_cohort_metrics.sql (0.0 с)
+[2026-10-25 18:17:10,493] #INFO     main.py:128 - cohort_rfm - Этап setup завершён за 0.8 с
+[2026-10-25 18:17:10,493] #INFO     main.py:126 - cohort_rfm - === Этап: rfm ===
+[2026-10-25 18:17:10,494] #INFO     funcs.py:155 - funcs.funcs - Папка RFM_view: файлов 4, режим execute
+[2026-10-25 18:17:10,505] #INFO     funcs.py:167 - funcs.funcs - Готово: 01_RFM_metrics.sql (0.0 с)
+[2026-10-25 18:17:10,520] #INFO     funcs.py:167 - funcs.funcs - Готово: 02_RFM_segmentation_thresholds.sql (0.0 с)
+[2026-10-25 18:17:10,523] #INFO     funcs.py:167 - funcs.funcs - Готово: 03_RFM_segments.sql (0.0 с)
+[2026-10-25 18:17:10,526] #INFO     funcs.py:167 - funcs.funcs - Готово: 04_RFM_segment_share.sql (0.0 с)
+[2026-10-25 18:17:10,526] #INFO     main.py:128 - cohort_rfm - Этап rfm завершён за 0.0 с
+[2026-10-25 18:17:10,526] #INFO     main.py:126 - cohort_rfm - === Этап: checks ===
+[2026-10-25 18:17:10,957] #INFO     funcs.py:179 - funcs.funcs - Проверка Cohort_checks/01_checks.sql: OK
+[2026-10-25 18:17:11,126] #ERROR    funcs.py:181 - funcs.funcs - Проверка RFM_checks/01_checks.sql: нарушений 1
+       check_name                      detail
+доли не дают 100% клиенты=97.0, выручка=100.0
+[2026-10-25 18:17:11,126] #ERROR    main.py:130 - cohort_rfm - Не пройдены проверки: {'RFM_checks/01_checks.sql': 1}
+[2026-10-25 18:30:14,426] #INFO     main.py:108 - cohort_rfm - База: cohort_rfm_als (localhost:5433); этапы: setup, rfm, checks, reports
+[2026-10-25 18:30:14,506] #INFO     main.py:126 - cohort_rfm - === Этап: setup ===
+[2026-10-25 18:30:14,508] #INFO     funcs.py:155 - funcs.funcs - Папка Cohort_setup: файлов 6, режим execute
+[2026-10-25 18:30:14,652] #INFO     funcs.py:167 - funcs.funcs - Готово: 01_params.sql (0.1 с)
+[2026-10-25 18:30:14,661] #INFO     funcs.py:167 - funcs.funcs - Готово: 02_etl_orders.sql (0.0 с)
+[2026-10-25 18:30:14,896] #INFO     funcs.py:167 - funcs.funcs - Готово: 03_etl_clients.sql (0.2 с)
+[2026-10-25 18:30:15,188] #INFO     funcs.py:167 - funcs.funcs - Готово: 04_client_ltv.sql (0.3 с)
+[2026-10-25 18:30:15,527] #INFO     funcs.py:167 - funcs.funcs - Готово: 05_cohort_retention.sql (0.3 с)
+[2026-10-25 18:30:15,533] #INFO     funcs.py:167 - funcs.funcs - Готово: 06_cohort_metrics.sql (0.0 с)
+[2026-10-25 18:30:15,534] #INFO     main.py:128 - cohort_rfm - Этап setup завершён за 1.0 с
+[2026-10-25 18:30:15,534] #INFO     main.py:126 - cohort_rfm - === Этап: rfm ===
+[2026-10-25 18:30:15,535] #INFO     funcs.py:155 - funcs.funcs - Папка RFM_view: файлов 4, режим execute
+[2026-10-25 18:30:15,539] #INFO     funcs.py:167 - funcs.funcs - Готово: 01_RFM_metrics.sql (0.0 с)
+[2026-10-25 18:30:15,559] #INFO     funcs.py:167 - funcs.funcs - Готово: 02_RFM_segmentation_thresholds.sql (0.0 с)
+[2026-10-25 18:30:15,564] #INFO     funcs.py:167 - funcs.funcs - Готово: 03_RFM_segments.sql (0.0 с)
+[2026-10-25 18:30:15,571] #INFO     funcs.py:167 - funcs.funcs - Готово: 04_RFM_segment_share.sql (0.0 с)
+[2026-10-25 18:30:15,571] #INFO     main.py:128 - cohort_rfm - Этап rfm завершён за 0.0 с
+[2026-10-25 18:30:15,571] #INFO     main.py:126 - cohort_rfm - === Этап: checks ===
+[2026-10-25 18:30:16,039] #INFO     funcs.py:179 - funcs.funcs - Проверка Cohort_checks/01_checks.sql: OK
+[2026-10-25 18:30:16,212] #INFO     funcs.py:179 - funcs.funcs - Проверка RFM_checks/01_checks.sql: OK
+[2026-10-25 18:30:16,212] #INFO     main.py:128 - cohort_rfm - Этап checks завершён за 0.6 с
+[2026-10-25 18:30:16,213] #INFO     main.py:126 - cohort_rfm - === Этап: reports ===
+[2026-10-25 18:30:16,213] #INFO     funcs.py:155 - funcs.funcs - Папка Cohort_reports: файлов 3, режим export
+[2026-10-25 18:30:16,572] #INFO     funcs.py:119 - funcs.funcs - Сохранено: ARPPU_LTV_report.xlsx (55 строк)
+[2026-10-25 18:30:16,572] #INFO     funcs.py:167 - funcs.funcs - Готово: ARPPU_LTV_report.sql (0.4 с)
+[2026-10-25 18:30:16,638] #INFO     funcs.py:119 - funcs.funcs - Сохранено: Cohort_LTV_analysis.xlsx (49 строк)
+[2026-10-25 18:30:16,639] #INFO     funcs.py:167 - funcs.funcs - Готово: Cohort_LTV_analysis.sql (0.1 с)
+[2026-10-25 18:30:16,679] #INFO     funcs.py:119 - funcs.funcs - Сохранено: Cohort_Retention.xlsx (60 строк)
+[2026-10-25 18:30:16,680] #INFO     funcs.py:167 - funcs.funcs - Готово: Cohort_Retention.sql (0.0 с)
+[2026-10-25 18:30:16,680] #INFO     funcs.py:155 - funcs.funcs - Папка RFM_reports: файлов 1, режим export
+[2026-10-25 18:30:16,763] #INFO     funcs.py:119 - funcs.funcs - Сохранено: RFM_segments_share_report.xlsx (7 строк)
+[2026-10-25 18:30:16,763] #INFO     funcs.py:167 - funcs.funcs - Готово: RFM_segments_share_report.sql (0.1 с)
+[2026-10-25 18:30:16,763] #INFO     main.py:128 - cohort_rfm - Этап reports завершён за 0.6 с
+[2026-10-25 18:30:16,764] #INFO     main.py:138 - cohort_rfm - Готово
