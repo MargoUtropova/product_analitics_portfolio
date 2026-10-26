@@ -4,3 +4,4 @@
 *.xlsx
 IMPLEMENTATION.md
 tmp.*
+logs/
